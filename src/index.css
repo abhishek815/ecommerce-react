@@ -794,7 +794,6 @@ select {
   }
   .book__selected--figure {
     width: 100%;
-    justify-content: flex-start;
   }
   .book__selected--description {
     width: 100%;
