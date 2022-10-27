@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import LandingImg from '../assets/Undraw_Books.svg'
 
 function Landing() {

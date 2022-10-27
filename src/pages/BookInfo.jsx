@@ -7,13 +7,22 @@ import Book from '../components/ui/Book';
 import Price from '../components/ui/Price';
 import Rating from '../components/ui/Rating';
 
-const BookInfo = ({ books }) => {
+const BookInfo = ({ books, addToCart, cart }) => {
     const { id } = useParams()
     const location = useLocation();
     const book = books.find(book => +book.id === +id)
+
     useEffect(() => {
         document.documentElement.scrollTo(0, 0);
-      }, [location.pathname]);
+    }, [location.pathname]);
+
+    function addBookToCart(book) {
+        addToCart(book)
+    }
+
+    function isDupe() {
+        return cart.find(book => book.id === +id)
+    }
 
     return (
         <div id="books__body">
@@ -49,9 +58,11 @@ const BookInfo = ({ books }) => {
                                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis omnis enim facilis! Nostrum aliquid fuga voluptatum sed expedita? Veniam, maxime quos consequatur facilis voluptatum dolorem? Saepe, officia! Eaque, minus porro?
                                     </p>
                                 </div>
-                                <button className="btn">
-                                    Add to Cart
-                                </button>
+                                {
+                                    isDupe() ? <Link to='/cart'><button className="btn">Checkout</button> </Link>: <button className="btn" onClick={() => addBookToCart(book)}>
+                                        Add to Cart
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -67,7 +78,7 @@ const BookInfo = ({ books }) => {
                         <div className="books">
                             {
                                 books.filter(book => book.rating === 5 && +book.id !== +id)
-                                    .slice(0,4)
+                                    .slice(0, 4)
                                     .map((book) => {
                                         return <Book book={book} key={book.id} />
                                     })
